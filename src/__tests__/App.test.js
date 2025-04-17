@@ -4,6 +4,7 @@ import {
   fireEvent,
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
@@ -86,9 +87,18 @@ test("updates the answer when the dropdown is changed", async () => {
     target: { value: "3" },
   });
 
-  expect(screen.queryAllByLabelText(/Correct Answer/)[0].value).toBe("3");
+  
+  /*expect(screen.queryAllByLabelText(/Correct Answer/)[0].value).toBe("3");
 
   rerender(<App />);
 
   expect(screen.queryAllByLabelText(/Correct Answer/)[0].value).toBe("3");
+});*/
+
+await waitFor(() => {
+  expect(screen.queryAllByLabelText(/Correct Answer/)[0].value).toBe("3");
+});
+
+rerender(<App />);
+expect(screen.queryAllByLabelText(/Correct Answer/)[0].value).toBe("3");
 });
